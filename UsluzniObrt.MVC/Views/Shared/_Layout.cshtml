@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</head>
+
+<body>
+
+    <div class="d-flex" id="wrapper">
+        @if (User.Identity.IsAuthenticated)
+        {
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading">Uslužni Obrt</div>
+            <div class="list-group list-group-flush">
+
+                @Html.ActionLink("Menu", "Menu", null,  new { @class = "list-group-item list-group-item-action bg-light" })
+                @Html.ActionLink("Orders", "Index", null,  new { @class = "list-group-item list-group-item-action bg-light" })
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+        }
+        else
+        {
+            @Html.Partial("_OrderSidebar")
+        }
+
+        <!-- Sidebar -->
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <button class="btn btn-primary" id="menu-toggle">Navigation</button>
+            </nav>
+
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+﻿@model UsluzniObrt.MVC.ViewModels.ItemsViewModel
+@{
+    ViewBag.Title = "StoreMenu";
+}
+<h2 class="text-center">Create Item/Category</h2>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-6">
+
+                @Html.ActionLink("New Item", "CreateItem", null, new { @class = "btn btn-primary" })
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+        @foreach (var item in Model.Items)
+        {
+            <div class="row justify-content-center">
+                <div class="col">
+                    <div class="card card-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="text-center text-capitalize">@item.Name</td>
+                                    <td class="text-center text-capitalize">@item.Price.ToString("0.00 Kn")</td>
+                                    <td class="text-center text-capitalize">@item.Description</td>
+                                    <td class="text-center text-capitalize">@item.Category.Name</td>
+                                    <td class="text-center text-capitalize">@item.Status</td>
+                                    <td class="text-center text-capitalize">
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+                                        @Html.ActionLink("Delete", "DeleteItem", new { id = item.Id }, new { @class = "btn btn-primary" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+
+
+</body>

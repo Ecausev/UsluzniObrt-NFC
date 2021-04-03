@@ -1,0 +1,50 @@
+﻿@model UsluzniObrt.MVC.ViewModels.ItemsViewModel
+@{
+    ViewBag.Title = "Store Menu";
+}
+<body>
+
+    @Html.AntiForgeryToken()
+    @foreach (var s in ViewBag.CategoryList)
+        {
+            <p>
+                <button class=" pt-3 btn btn-primary btn-lg btn-block " data-toggle="collapse" href="#ID_@s.Id" role="button" aria-expanded="false" aria-controls="ID_@s.Id">@s.Name</button>
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="ID_@s.Id">
+                            <div class="card card-body">
+                                <table class="table-responsive-sm table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">Naziv</td>
+                                            <td class="text-center">Cijena</td>
+                                            <td class="text-center">Opis</td>
+                                            <td ></td>
+                                        </tr>
+                                        @foreach (var item in Model.Items.Where(x => x.CategoryId == s.Id && x.Status == 0))
+                                        {   
+                                            <tr>
+
+                                                <td class="text-center">@item.Name</td>
+                                                <td class="text-center">@item.Price.ToString("0.00 Kn")</td>
+                                                <td class="text-center">@item.Description</td>
+
+                                                <td class="text-sm-center">
+                                                @Html.ActionLink("Add to order", "Cart", new { id = item.Id}, new { @class = "btn btn-primary" })
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+        }
+</body>
+
+@*check status of last order for that table. if status == aktivan, id =
+
+
+Korištenje modala za kreiranje tablice narudžbe! *@

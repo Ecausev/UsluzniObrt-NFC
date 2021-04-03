@@ -1,0 +1,64 @@
+﻿@model UsluzniObrt.MVC.ViewModels.CartViewModel
+
+@{
+    ViewBag.Title = "Your Cart";
+}
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Quantity</th>
+                            <th>Item</th>
+                            <th class="text-right">Price</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Cart.OrderList)
+                        {
+                            <tr>
+                                <td class="text-center text-capitalize">
+                                    <p class="mb-0">
+                                        @Html.ActionLink("-", "RemoveOneFromCart", new { id = item.MenuItemId }, new { @class = "btn btn-danger" })
+                                    </p>
+                                    <p class="mb-0">@item.Quantity</p>
+                                    <p class="mb-0">
+                                        @Html.ActionLink("+", "Cart", new { id = item.MenuItemId, Table = Model.Cart.Table }, new { @class = "btn btn-success" })
+                                    </p>
+                                </td>
+                                @foreach (var x in Model.MenuItemList.Where(x => x.Id == item.MenuItemId))
+                                {
+                                    <td class="text-center text-capitalize"> @x.Name</td>
+                                    <td class="text-center text-capitalize">
+                                        @((item.Quantity * x.Price).ToString("c"))
+                                    </td>
+                                }
+                                <td>@Html.ActionLink("Remove", "RemoveFromCart", new { id = item.MenuItemId }, new { @class = "btn btn-primary" })</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2" class="text-right">Total:</td>
+                            @*<td class="text-right">@Model.Cart.Calculate().ToString("c")</td>*@
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <div class="text-center">
+                    @Html.ActionLink("Back To Menu", "Menu", new { id = Model.Cart.Table })
+                </div>
+                @if (Model.Cart.OrderList.FirstOrDefault() != null)
+                {
+                    <div class="text-center">
+                        @Html.ActionLink("Create Order", "CreateOrder")
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</body>
