@@ -79,6 +79,7 @@
     <Compile Include="Category\ICategoryService.cs" />
     <Compile Include="Menu\IMenuService.cs" />
     <Compile Include="Menu\MenuService.cs" />
+    <Compile Include="Order\DTO\Calculate.cs" />
     <Compile Include="Order\DTO\Cart.cs" />
     <Compile Include="Order\DTO\OrderCreate.cs" />
     <Compile Include="Order\IOrderService.cs" />

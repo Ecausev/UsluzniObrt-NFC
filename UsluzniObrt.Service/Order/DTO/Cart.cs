@@ -17,7 +17,6 @@ namespace UsluzniObrt.MVC.ViewModels
             if (itemOnList == null)
             {
                 itemOrderList.Add(new OrderItem { MenuItemId = item.Id ,  Quantity = qty });
-
             }
             else
             {
@@ -45,11 +44,8 @@ namespace UsluzniObrt.MVC.ViewModels
             }
 
         }
-        //public decimal Calculate()
-        //{
 
-        //    return Convert.ToDecimal(itemOrderList.Sum(x => x.MenuItem.Price * x.Quantity));
-        //}
+        
         public void Clear()
         {
             itemOrderList.Clear();

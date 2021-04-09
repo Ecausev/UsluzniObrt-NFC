@@ -4,53 +4,66 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div class="container-fluid">
+    <div class="container-fluid mt-3">
         <div class="row position-relative">
 
-            <div class="card text-center mx-auto">
+            <div class="card text-center mx-auto border-dark">
                 <div class="card-header">
-                    <h2 class="text-success">Table Number: @ViewBag.Table</h2>
+                    <h2 class="text-success">Stol @ViewBag.Table</h2>
                     
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Proizvodi</h5>
-                    <p class="card-text">
+                    <h5 class="card-title">Detalji Narudžbe</h5>
+                    <div class="col-sm">
+                        <p class="card-text">
+                            @foreach (var item in Model.itemOrderList)
+                            {
 
-                        @foreach (var item in Model.itemOrderList)
-                        {
+                                <table class="border-bottom">
+                                    <tr >
+                                        <td class="pr-5">
+                                            <h6 >@item.MenuItem.Name</h6> 
+                                        </td>
 
-                            <table>
-                                <tr>
-                                    <td> Product Name: @item.MenuItem.Name 
-                                    Product Quantity: @item.Quantity</td>
-                                </tr>
-                            </table>
+                                        <td>
+                                            <h6>@item.Quantity</h6>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            }
                             
-                        }
-                    </p>
+                        </p>
+                        <h6 class="text-center">Cijena: @((ViewBag.Sum).ToString("c"))</h6>
+                    </div>
+                    
                 </div>
                 <div class="card-footer text-muted">
-                    @switch (Model.Order.Status)
+                    @if (Model.Order != null)
                     {
-                        case UsluzniObrt.Model.OrderStatus.Pending:
-                            <p class="text-secondary">Status:</p>
-                            <p class="text-warning">Pending</p>
-                            break;
-                        case UsluzniObrt.Model.OrderStatus.Declined:
-                            <p class="text-secondary">Status:</p>
-                            <p class="text-danger">Declined</p>
-                            break;
-                        case UsluzniObrt.Model.OrderStatus.InProgress:
-                            <p class="text-secondary">Status:</p>
-                            <p class="text-primary">In Progress</p>
-                            break;
-                        case UsluzniObrt.Model.OrderStatus.Completed:
-                            <p class="text-secondary">Status:</p>
-                            <p class="text-success">Completed</p>
-                            break;
-                        default:
-                            break;
+                        switch (Model.Order.Status)
+                        {
+                            case UsluzniObrt.Model.OrderStatus.Pending:
+                                <p class="text-secondary">Status:</p>
+                                <p class="text-warning">Pending</p>
+                                break;
+                            case UsluzniObrt.Model.OrderStatus.Declined:
+                                <p class="text-secondary">Status:</p>
+                                <p class="text-danger">Declined</p>
+                                break;
+                            case UsluzniObrt.Model.OrderStatus.InProgress:
+                                <p class="text-secondary">Status:</p>
+                                <p class="text-primary">In Progress</p>
+                                break;
+                            case UsluzniObrt.Model.OrderStatus.Completed:
+                                <p class="text-secondary">Status:</p>
+                                <p class="text-success">Completed</p>
+                                break;
+                            default:
+                                break;
+                        }
                     }
+
                 </div>
             </div>
         </div>

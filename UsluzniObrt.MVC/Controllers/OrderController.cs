@@ -84,11 +84,14 @@ namespace UsluzniObrt.MVC.Controllers
         {
             GetTableId();
             var ItemList = _menuService.GetAll().ToList();
+            CartSum();
             return View(new CartViewModel {
                 Cart = GetCart(),
                 MenuItemList = ItemList,
             });
         }
+
+
 
         public ActionResult CreateOrder(CartViewModel model)
         {
@@ -135,12 +138,13 @@ namespace UsluzniObrt.MVC.Controllers
             myOrder = _orderService.GetAll().Where(x => x.TableNumber == id).LastOrDefault();
             if (myOrder != null)
             {
+
+                OrderSum(id); 
                 return View(new OrdersViewModel
                 {
 
                     Order = myOrder,
                     itemOrderList = myOrder.Items.ToList()
-
                 });
             }
 
@@ -173,7 +177,29 @@ namespace UsluzniObrt.MVC.Controllers
             }
             return cart;
         }
+        public float CartSum()
+        {
+            var ItemList = _menuService.GetAll().ToList();
+            List<Sum> Sum = new List<Sum>();
+            foreach (var item in GetCart().itemOrderList)
+            {
+                Sum.Add(new Sum { Price = ItemList.Where(x => x.Id == item.MenuItemId).Select(x => x.Price).FirstOrDefault(), Qty = item.Quantity });
+                
+            }
+            return ViewBag.Sum = Sum.Sum(x => x.Price*x.Qty);
+        }
+        public float OrderSum(int id)
+        {
+            var ItemList = _menuService.GetAll().ToList();
+            var myorder = _orderService.GetAll().Where(x => x.TableNumber == id).LastOrDefault();
+            List<OrderItem> orderItems = new List<OrderItem>(myorder.Items);
+            List<Sum> Sum = new List<Sum>();
+            foreach (var item in orderItems.Where(x => x.OrderId == myorder.Id) )
+            {
+                Sum.Add(new Sum { Price = ItemList.Where(x => x.Id == item.MenuItemId).Select(x => x.Price).FirstOrDefault(), Qty = item.Quantity });
 
-        
+            }
+            return ViewBag.Sum = Sum.Sum(x => x.Price * x.Qty);
+        }
     }
 }

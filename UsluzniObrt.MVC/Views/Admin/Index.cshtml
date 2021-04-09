@@ -1,7 +1,7 @@
 ﻿@model UsluzniObrt.MVC.ViewModels.OrdersViewModel
 
 
-<h2 class="text-center">Order Index</h2>
+<h2 class="text-center">Orders</h2>
 @* Foreach item in order where status == Active
     koristiti ViewBag Ordera s itemima koji se nalaze u orderu da bi ih prikazao u card-body kao listu sa sumom
     Napraviti na bottom of card button za accept/reject order Order ako je order preuzet onda samo close *@
@@ -10,53 +10,46 @@
         <div class="row position-relative">
             @foreach (var order in Model.OrderList.Where(x => x.Status == UsluzniObrt.Model.OrderStatus.InProgress || x.Status == UsluzniObrt.Model.OrderStatus.Pending))
             {
-                <div class="card text-center mx-auto">
+                <div class="card border-dark text-center mx-auto">
                     <div class="card-header">
-                        <h2>@order.TableNumber</h2>
+                        <h2>Stol @order.TableNumber</h2>
 
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Proizvodi</h5>
                         <p class="card-text">
+                        @foreach (var item in order.Items)
+                        {
 
-                            @foreach (var item in order.Items)
-                            {
+                            <table class="border-bottom">
+                                <tr>
+                                    <td class="pr-5">
+                                        <h6>@item.MenuItem.Name</h6>
+                                    </td>
 
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <h3>Naziv Proizvoda</h3> @item.MenuItem.Name
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Količina @item.Quantity</td>
-                                    </tr>
-                                </table>
+                                    <td>
+                                        <h6>@item.Quantity</h6>
+                                    </td>
+                                </tr>
+                            </table>
 
-                            }
-                            @switch (order.Status)
-                            {
-                                case UsluzniObrt.Model.OrderStatus.Pending:
-                                <p class="text-secondary">Status:</p>
+                        }
+
+                        @switch (order.Status)
+                        {
+                            case UsluzniObrt.Model.OrderStatus.Pending:
+                                <p class="text-secondary mt-3">Status:</p>
                                 <p class="text-warning">Pending</p>
-                                    break;
-                                case UsluzniObrt.Model.OrderStatus.Declined:
-                                <p class="text-secondary">Status:</p>
-                                <p class="text-danger">Declined</p>
-                                    break;
-                                case UsluzniObrt.Model.OrderStatus.InProgress:
-                                <p class="text-secondary">Status:</p>
+                                break;
+                            case UsluzniObrt.Model.OrderStatus.InProgress:
+                                <p class="text-secondary mt-3">Status:</p>
                                 <p class="text-primary">In Progress</p>
-                                    break;
-                                case UsluzniObrt.Model.OrderStatus.Completed:
-                                <p class="text-secondary">Status:</p>
-                                <p class="text-success">Completed</p>
-                                    break;
-                                default:
-                                    break;
-                                }
-                             </p>
-                            </div>
+                                break;
+                            default:
+                                break;
+                        }
+                        </p>
+                    </div>
                     <div class="card-footer text-muted">
                         @using (Html.BeginForm("EditOrder", "Admin", FormMethod.Post))
                         {

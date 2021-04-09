@@ -43,11 +43,11 @@
                     <tfoot>
                         <tr>
                             <td colspan="2" class="text-right">Total:</td>
-                            @*<td class="text-right">@Model.Cart.Calculate().ToString("c")</td>*@
+                            <td class="text-right">@((ViewBag.Sum).ToString("c"))</td>
                         </tr>
                     </tfoot>
                 </table>
-
+                
                 <div class="text-center">
                     @Html.ActionLink("Back To Menu", "Menu", new { id = Model.Cart.Table })
                 </div>

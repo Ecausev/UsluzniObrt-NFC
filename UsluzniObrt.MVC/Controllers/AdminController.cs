@@ -74,25 +74,33 @@ namespace UsluzniObrt.MVC.Controllers
 
         }
 
-        /// <summary>
-        /// TODO Category
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CreateCategory()
+        {
 
-        //[HttpGet]
-        //public ActionResult Category()
-        //{
+            return View();
 
+        }
 
-
-        //}
+        [HttpPost]
+        public ActionResult CreateCategory(CategoryViewModel model)
+        {
+            
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            _categoryService.Add(new Category
+            {
+                Name = model.Name
+            });
+            return RedirectToAction("Menu", "Admin");
+        }
         [HttpGet]
         public ActionResult Edit(int id)
         {
             EditViewBag(id);
             PopulateDropdownList();
-            ViewBag.Item = _menuService.GetById(id);
             return View();
         }
 
@@ -141,12 +149,6 @@ namespace UsluzniObrt.MVC.Controllers
         {
             ViewBag.EditItem = _menuService.GetById(id);
         }
-
-        //private IEnumerable<Order> PopulateOrders()
-        //{
-        //    ViewBag.OrdersList = _orderService.GetAll();
-        //    return 
-        //}
 
         [HttpGet]
         public ActionResult DeleteItem (int id)

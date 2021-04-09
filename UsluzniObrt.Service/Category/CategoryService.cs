@@ -23,7 +23,8 @@ namespace UsluzniObrt.Service
         }
         public void Add(Category newItem)
         {
-            throw new NotImplementedException();
+            _categoryRepository.Insert(newItem);
+            _categoryRepository.Save();
         }
 
         public void Delete(int id)
