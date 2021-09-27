@@ -10,10 +10,10 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Quantity</th>
-                            <th>Item</th>
-                            <th class="text-right">Price</th>
-                            <th class="text-center">Action</th>
+                            <th>Količina</th>
+                            <th>Proizvod</th>
+                            <th class="text-right">Cijena</th>
+                            <th class="text-center">Akcija</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,21 +42,18 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="2" class="text-right">Total:</td>
+                            <td colspan="2" class="text-right">Ukupno:</td>
                             <td class="text-right">@((ViewBag.Sum).ToString("c"))</td>
                         </tr>
                     </tfoot>
                 </table>
-                
-                <div class="text-center">
-                    @Html.ActionLink("Back To Menu", "Menu", new { id = Model.Cart.Table })
+                <div>
+                    @Html.ActionLink("Nazad na meni", "Menu", new { id = Model.Cart.Table }, new { @class = "btn btn-danger text-left" })
+                    @if (Model.Cart.OrderList.FirstOrDefault() != null)
+                    {
+                        @Html.ActionLink("Kreiraj Narudžbu", "CreateOrder", new { }, new { @class = "btn btn-success text-right" })
+                    }
                 </div>
-                @if (Model.Cart.OrderList.FirstOrDefault() != null)
-                {
-                    <div class="text-center">
-                        @Html.ActionLink("Create Order", "CreateOrder")
-                    </div>
-                }
 
             </div>
         </div>

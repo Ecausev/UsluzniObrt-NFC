@@ -37,10 +37,16 @@ namespace UsluzniObrt.Service
             _orderRepository.Save();
         }
 
-        public void edit(Order item)
+        public void edit(ModifyOrder item)
         {
-            _orderRepository.Update(item);
-            _orderRepository.Save();
+            var oldOrder = _orderRepository.GetById(item.OrderId);
+            if (oldOrder != null)
+            {
+                oldOrder.Status = item.status;
+                _orderRepository.Update(oldOrder);
+                _orderRepository.Save();
+            }
+            
         }
 
         public List<Order> GetAll()

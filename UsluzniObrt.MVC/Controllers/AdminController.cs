@@ -7,6 +7,8 @@ using UsluzniObrt.Model;
 using UsluzniObrt.MVC.ViewModels;
 using UsluzniObrt.Service;
 using UsluzniObrt.Repository;
+using UsluzniObrt.Service.DTO;
+using UsluzniObrt.Service.Menu.DTO;
 
 namespace UsluzniObrt.MVC.Controllers
 {
@@ -61,13 +63,14 @@ namespace UsluzniObrt.MVC.Controllers
                 PopulateDropdownList();
                 return View(model);
             }
-            _menuService.Add(new MenuItem
+            _menuService.Add(new CreateMenuItem
             {
-                CategoryId = model.CategoryId,
                 Name = model.Name,
                 Price = model.Price,
+                CategoryId = model.CategoryId,
                 Description = model.Description,
                 Status = model.Status
+
             });
 
             return RedirectToAction("Menu", "Admin");
@@ -114,14 +117,15 @@ namespace UsluzniObrt.MVC.Controllers
                 return View();
             }
 
-            var item = _menuService.GetById(model.Id);
-            item.CategoryId = model.CategoryId;
-            item.Name = model.Name;
-            item.Price = model.Price;
-            item.Description = model.Description;
-            item.Status = model.Status;
-            
-            _menuService.edit(item);
+            _menuService.edit(new EditMenuItem {
+                Id = model.Id,
+                Name = model.Name,
+                Price = model.Price,
+                CategoryId = model.CategoryId,
+                Description = model.Description,
+                Status = model.Status
+
+            });
             return RedirectToAction("Index");
 
         }
@@ -130,13 +134,10 @@ namespace UsluzniObrt.MVC.Controllers
         public ActionResult EditOrder(OrdersViewModel model)
         {
 
-            Order order = new Order();
-            order.Id = model.Order.Id;
-            order.Status = model.Order.Status;
-            order.Date = DateTime.Now;
-            order.TableNumber = model.Order.TableNumber;
-
-            _orderService.edit(order);
+            _orderService.edit(new ModifyOrder {
+                OrderId = model.Order.Id,
+                status = model.Order.Status
+            });
             return RedirectToAction("Index");
 
         }

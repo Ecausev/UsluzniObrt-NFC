@@ -77,11 +77,13 @@
   <ItemGroup>
     <Compile Include="Category\CategoryService.cs" />
     <Compile Include="Category\ICategoryService.cs" />
+    <Compile Include="Menu\DTO\CreateMenuItem.cs" />
+    <Compile Include="Menu\DTO\EditMenuItem.cs" />
     <Compile Include="Menu\IMenuService.cs" />
     <Compile Include="Menu\MenuService.cs" />
     <Compile Include="Order\DTO\Calculate.cs" />
     <Compile Include="Order\DTO\Cart.cs" />
-    <Compile Include="Order\DTO\OrderCreate.cs" />
+    <Compile Include="Order\DTO\Modify.cs" />
     <Compile Include="Order\IOrderService.cs" />
     <Compile Include="Order\OrderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

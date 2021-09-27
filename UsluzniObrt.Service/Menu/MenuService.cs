@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UsluzniObrt.Model;
 using UsluzniObrt.Repository;
+using UsluzniObrt.Service.Menu.DTO;
 
 namespace UsluzniObrt.Service
 {
@@ -22,8 +23,16 @@ namespace UsluzniObrt.Service
         {
             _menuitemRepository = menuitemRepository;
         }
-        public void Add(MenuItem newItem)
+        public void Add(CreateMenuItem Item)
         {
+            var newItem = new MenuItem {
+
+                Name = Item.Name,
+                Description = Item.Description,
+                Price = Item.Price,
+                Status = Item.Status,
+                CategoryId = Item.CategoryId
+            };
             _menuitemRepository.Insert(newItem);
             _menuitemRepository.Save();
             
@@ -35,10 +44,21 @@ namespace UsluzniObrt.Service
             _menuitemRepository.Save();
         }
 
-        public void edit(MenuItem item)
+        public void edit(EditMenuItem item)
         {
-            _menuitemRepository.Update(item);
-            _menuitemRepository.Save();
+            var oldItem = _menuitemRepository.GetById(item.Id);
+            if (oldItem != null)
+            {
+                oldItem.Status = item.Status;
+                oldItem.Name = item.Name;
+                oldItem.Price = item.Price;
+                oldItem.Description = item.Description;
+                oldItem.CategoryId = item.CategoryId;
+                _menuitemRepository.Update(oldItem);
+                _menuitemRepository.Save();
+            }
+
+            
         }
 
         public List<MenuItem> GetAll()

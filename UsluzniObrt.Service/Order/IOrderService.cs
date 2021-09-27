@@ -9,7 +9,7 @@ namespace UsluzniObrt.Service
         List<Order> GetAll();
         void Add(Order order);
         void Delete(int id);
-        void edit(Order item);
+        void edit(ModifyOrder item);
         Order GetById(int id);
         bool CanPlaceOrder(int id);
     }
